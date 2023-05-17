@@ -1,48 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Card from "./Card";
 import { api } from "../utils/Api"
 
 
 export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardClick }) {
-    const [userName, setUserName] = useState("");
-    const [userDescription, setUserDescription] = useState("");
-    const [userAvatar, setUserAvatar] = useState("");
-    const [cards, setCards] = useState("");
+    const [userName, setUserName] = React.useState("");
+    const [userDescription, setUserDescription] = React.useState("");
+    const [userAvatar, setUserAvatar] = React.useState("");
+    const [cards, setCards] = React.useState("");
 
-    useEffect(() => {
-        api.getUserData()
+    React.useEffect(() => {
+        Promise.all([api.getUserData(), api.getInitialCards])
             .then(
-                (userData) => (
+                ([userData, cardsData]) => (
                     setUserName(userData.name),
                     setUserDescription(userData.about),
-                    setUserAvatar(userData.avatar)
+                    setUserAvatar(userData.avatar),
+                    console.log(cardsData),
+                    setCards(cardsData)
                 )
             )
             .catch((err) => console.log(`Ошибка ${err}`))
     }
     )
 
-    useEffect(() => {
-        api.getInitialCards()
-            .then((cards) => setCards(cards))
-            .catch((err) => console.log(`Ошибка ${err}`))
-    }, [])
-
     return (
         <main className="main">
             <section className="profile">
-                <button className="profile__avatar" onClick={onEditAvatar}
-                style={{
-                    backgroundImage: `url(${userAvatar})`,
-                    backgroundSize: `cover`,
-                    backgroundRepeat: `no-repeat`,
-                    backgroundPosition: `center center`
-                }}/>
+                <div className="profile__avatar" onClick={onEditAvatar}>
+                    <img src={userAvatar}
+                    alt="Аватарка"
+                    className="profile__image"
+                    onClick={onEditAvatar}/>
+                </div>
 
                 <div className="profile__data">
                     <div className="profile__info">
-                        <h1 className="profile__name">{userName}</h1>
-                        <p className="profile__intro">{userDescription}</p>
+                        <h1 className="profile__name">Рептилия {userName}</h1>
+                        <p className="profile__intro">Чешуя {userDescription}</p>
                     </div>
                     <button className="profile__edit-button" type="button" title="Редактировать профиль"></button>
                 </div>
