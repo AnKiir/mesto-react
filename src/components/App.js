@@ -96,7 +96,14 @@ function App() {
         <span className="popup__info-error intro-input-error" />
       </PopupWithForm>
 
-      <PopupWithForm></PopupWithForm>
+      <PopupWithForm name="avatar" title="Обновить аватар"
+        btnText="Обновить"
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}>
+        <input type="url" name="avatar" id="avatar" className="popup__info popup__info_type_link" minLength="2"
+          placeholder="Ссылка на картинку" required></input>
+        <span className="popup__info-error avatar-error" />
+      </PopupWithForm>
 
       <PopupWithForm name="delete-card" title="Вы уверены?" btnText="Да" />
 
