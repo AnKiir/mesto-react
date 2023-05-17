@@ -12,7 +12,6 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
 
-
   useEffect(() => {
     if (
       isEditProfilePopupOpen ||
@@ -57,7 +56,6 @@ function App() {
       closeAllPopups();
     }
   }
-
   function handleOverlayClick(e) {
     if (e.target.classList.contains('popup__opened')) {
       closeAllPopups();
@@ -69,43 +67,43 @@ function App() {
       <Header />
       <Main
         onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
+        onAddCard={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
         onCardClick={handleCardClick} />
       <Footer />
 
       <PopupWithForm name="profile" title="Редактировать профиль"
+        btnText="Обновить"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}>
-        <input type="text" name="name" id="name-input" className="popup__info popup__info_type_name" maxLength="40"
+        <input type="text" required name="name" id="name-input" className="popup__info popup__info_type_name" maxLength="40"
           minLength="2" placeholder="Имя Профиля" />
-        <span className="popup__info-error name-input-error"></span>
-        <input type="text" name="about" id="intro-input" className="popup__info popup__info_type_intro"
+        <span className="popup__info-error name-input-error" />
+        <input type="text" required name="about" id="intro-input" className="popup__info popup__info_type_intro"
           maxLength="200" minLength="2" placeholder="Описание Профиля" />
-        <span className="popup__info-error intro-input-error"></span>
+        <span className="popup__info-error intro-input-error" />
       </PopupWithForm>
 
+      <PopupWithForm name="add-card" title="Новое место"
+        btnText="Обновить"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}>
+        <input type="text" name="name" id="title-input" className="popup__info popup__info_type_title"
+          maxLength="30" minLength="2" placeholder="Название" required />
+        <span className="popup__info-error name-input-error" />
+        <input type="url" name="link" id="link-input" className="popup__info popup__info_type_link" minLength="2"
+          placeholder="Ссылка на картинку" required />
+        <span className="popup__info-error intro-input-error" />
+      </PopupWithForm>
 
       <PopupWithForm></PopupWithForm>
-      <PopupWithForm></PopupWithForm>
-      <PopupWithForm></PopupWithForm>
+
+      <PopupWithForm name="delete-card" title="Вы уверены?" btnText="Да" />
 
       <ImagePopup
         card={selectedCard}
         onClose={closeAllPopups} />
-
-      <section className="popup popup-delete" id="deleteElement">
-        <div className="popup__container">
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form className="popup__form" noValidate>
-            <button className="popup__button popup__button_type_submit" type="submit">Да</button>
-          </form>
-          <button className="popup__button popup__button_type_close" type="button"></button>
-        </div>
-      </section>
-
     </div>
-
   );
 }
 
