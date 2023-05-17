@@ -10,13 +10,12 @@ export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardCli
     const [cards, setCards] = useState("");
 
     useEffect(() => {
-        api
-            .getUserData()
+        api.getUserData()
             .then(
-                (userInfo) => (
-                    setUserName(userInfo.name),
-                    setUserDescription(userInfo.about),
-                    setUserAvatar(userInfo.avatar)
+                (userData) => (
+                    setUserName(userData.name),
+                    setUserDescription(userData.about),
+                    setUserAvatar(userData.avatar)
                 )
             )
             .catch((err) => console.log(`Ошибка ${err}`))
@@ -24,8 +23,7 @@ export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardCli
     )
 
     useEffect(() => {
-        api
-            .getInitialCards()
+        api.getInitialCards()
             .then((cards) => setCards(cards))
             .catch((err) => console.log(`Ошибка ${err}`))
     }, [])
@@ -33,11 +31,13 @@ export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardCli
     return (
         <main className="main">
             <section className="profile">
-                <div className="profile__avatar" onClick={onEditAvatar}>
-                    <img className="profile__image"
-                        src={userAvatar}
-                        alt="Фото пользователя" />
-                </div>
+                <button className="profile__avatar" onClick={onEditAvatar}
+                style={{
+                    backgroundImage: `url(${userAvatar})`,
+                    backgroundSize: `cover`,
+                    backgroundRepeat: `no-repeat`,
+                    backgroundPosition: `center center`
+                }}/>
 
                 <div className="profile__data">
                     <div className="profile__info">
