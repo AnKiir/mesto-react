@@ -1,4 +1,4 @@
-export default class Api {
+class Api {
   constructor(options) {
     this._url = options.baseUrl;
     this._headers = options.headers;
@@ -34,7 +34,7 @@ export default class Api {
         about: about,
       })
     })
-    .then((res) => this._checkResponse(res))
+      .then((res) => this._checkResponse(res))
   }
 
   // аватарка пользователя
@@ -98,3 +98,12 @@ export default class Api {
   }
 
 }
+
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-63',
+  headers: {
+    authorization: '46df0b53-e88b-4480-800a-7a7df875992f',
+    'Content-Type': 'application/json',
+  }
+})
+export {api}

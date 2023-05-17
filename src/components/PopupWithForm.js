@@ -1,6 +1,7 @@
+import React from 'react';
+
 export default function PopupWithForm(props) {
     return (
-        <>
             <div className={`popup ${props.name} ${props.isOpen && "popup_opened"}`}>
                 <div className="popup__container">
                     <h2 className="popup__title">{props.title}</h2>
@@ -15,6 +16,5 @@ export default function PopupWithForm(props) {
                     type="button"></button>
                 </div>
             </div>
-        </>
     )
 }
