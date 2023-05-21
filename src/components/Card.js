@@ -1,15 +1,15 @@
 import React from 'react';
 
 export default function Card({ card, onCardClick }) {
-    function handleCardClick() {
+    function handleClick() {
         onCardClick(card);
     }
     return (
-            <acticle className="element">
+            <div className="element">
                 <img className="element__image"
                     alt={card.name}
                     src={card.link}
-                    onClick={handleCardClick} />
+                    onClick={() => handleClick(card)} />
                 <button type="button"
                     className="element__delete-button"
                     aria-label="Удалить фото" />
@@ -22,6 +22,6 @@ export default function Card({ card, onCardClick }) {
                         <p className="element__like-counter">{card.likes.length}</p>
                     </div>
                 </div>
-            </acticle>
+            </div>
     )
 }

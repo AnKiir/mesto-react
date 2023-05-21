@@ -31,11 +31,10 @@ export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardCli
             </section>
 
             <div className="elements">
-                {cards.map((card) => {
-                    return (
+                {cards.map((card) => (
                         <Card card={card} key={card._id} onCardClick={onCardClick} />
                     )
-                })}
+                )}
             </div>
         </main>
     )

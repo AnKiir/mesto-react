@@ -12,7 +12,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
   const [name, setUserName] = useState('');
   const [about, setUserAbout] = useState('');
   const [avatar, setUserAvatar] = useState('');
@@ -38,11 +38,9 @@ function App() {
       setSelectedCard
     ) {
       document.addEventListener('keydown', handleEscClose);
-      document.addEventListener('click', handleOverlayClick);
     }
     return () => {
       document.removeEventListener('keydown', handleEscClose);
-      document.removeEventListener('click', handleOverlayClick);
     };
   }, [
     isEditProfilePopupOpen,
@@ -76,12 +74,6 @@ function App() {
 
   function handleEscClose(e) {
     if (e.key === 'Escape') {
-      closeAllPopups();
-    }
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target.classList.contains('popup__opened')) {
       closeAllPopups();
     }
   }
@@ -137,9 +129,7 @@ function App() {
 
       <PopupWithForm name="delete-card" title="Вы уверены?" btnText="Да" />
 
-      <ImagePopup
-        card={selectedCard}
-        onClose={closeAllPopups} />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }
