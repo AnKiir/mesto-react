@@ -12,10 +12,23 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
+  const [name, setUserName] = useState('');
+  const [about, setUserAbout] = useState('');
+  const [avatar, setUserAvatar] = useState('');
+
+  useEffect(() => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([{ name, about, avatar }, cards]) => {
+        setUserName(name);
+        setUserAbout(about);
+        setUserAvatar(avatar);
+        setCards(cards);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     if (
@@ -37,39 +50,6 @@ function App() {
     isEditAvatarPopupOpen,
     setSelectedCard,
   ]);
-
-  React.useEffect(() => {
-    Promise.all([api.getUserData(), api.getInitialCards()])
-      .then(
-        ([userData, cardsData]) => (
-          setUserName(userData.name),
-          setUserDescription(userData.about),
-          setUserAvatar(userData.avatar),
-          console.log(cardsData),
-          setCards(cardsData)
-        )
-      )
-      .catch((err) => console.log(`Ошибка ${err}`))
-  }, [])
-
-  const [currentUser, setCurrentUser] = useState({});
-
-  useEffect(() => {
-    api.getUserData()
-      .then((data) => {
-        setCurrentUser(data);
-        console.log(currentUser)
-      })
-      .catch((err) => console.log(err))
-  }, [])
-
-  // useEffect(() => {
-  //   api.getInitialCards()
-  //     .then((items) => {
-  //       setCards(items)
-  //       console.log(cards)
-  //     })
-  // }, [])
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -113,7 +93,11 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddCard={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick} />
+        onCardClick={handleCardClick}
+        userName={name}
+        userDescription={about}
+        userAvatar={avatar}
+        cards={cards} />
       <Footer />
 
       <PopupWithForm name="profile" title="Редактировать профиль"
