@@ -88,6 +88,10 @@ class Api {
       .then((res) => this._checkResponse(res))
   }
 
+  toggleLike(cardId, isLiked) {
+    return isLiked ? this.deleteLike(cardId) : this.setLike(cardId)
+  }
+
   // удаление карточки
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
