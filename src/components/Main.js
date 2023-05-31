@@ -1,14 +1,25 @@
 import React from "react";
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
-export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardClick, 
-    cards, userName, userDescription, userAvatar }) {
+export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardClick, onCardLike, onCardDelete, cards}) {
+
+        const currentUser = useContext(CurrentUserContext);
+        const cardElements = cards.map(card => (
+            <Card key={card._id}
+             card ={card}
+             onCardClick={onCardClick}
+             onCardLike={onCardLike}
+             onCardDelete={onCardDelete}
+            />
+        ))
 
     return (
         <main className="main">
             <section className="profile">
                 <div className="profile__avatar" onClick={onEditAvatar}>
-                    <img src={userAvatar}
+                    <img src={currentUser.avatar}
                         alt="Аватарка"
                         className="profile__image"
                         onClick={onEditAvatar} />
@@ -16,8 +27,8 @@ export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardCli
 
                 <div className="profile__data">
                     <div className="profile__info">
-                        <h1 className="profile__name">{userName}</h1>
-                        <p className="profile__intro">{userDescription}</p>
+                        <h1 className="profile__name">{currentUser.name}</h1>
+                        <p className="profile__intro">{currentUser.about}</p>
                     </div>
                     <button className="profile__edit-button"
                         type="button"
@@ -31,10 +42,7 @@ export default function Main({ onEditAvatar, onEditProfile, onAddCard, onCardCli
             </section>
 
             <div className="elements">
-                {cards.map((card) => (
-                        <Card card={card} key={card._id} onCardClick={onCardClick} />
-                    )
-                )}
+                {cardElements}
             </div>
         </main>
     )
