@@ -145,14 +145,11 @@ function App() {
         />
 
         {/*обновление аватарки*/}
-        <PopupWithForm name="avatar" title="Обновить аватар"
-          btnText="Обновить"
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}>
-          <input type="url" name="avatar" id="avatar" className="popup__info popup__info_type_link" minLength="2"
-            placeholder="Ссылка на картинку" required></input>
-          <span className="popup__info-error avatar-error" />
-        </PopupWithForm>
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         {/*новая карточка*/}
         <PopupWithForm name="add-card" title="Новое место"

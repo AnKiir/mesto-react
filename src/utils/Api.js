@@ -25,7 +25,7 @@ class Api {
   }
 
   // профиль пользователя
-  setUserInfo({name, about}) {
+  setUserInfo({ name, about }) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -37,12 +37,12 @@ class Api {
   }
 
   // аватарка пользователя
-  editAvatar(avatar) {
+  editAvatar({avatar}) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatar,
+        avatar
       })
     })
       .then((res) => this._checkResponse(res))
