@@ -90,6 +90,17 @@ function App() {
       .finally(() => closeAllPopups())
   }
 
+  // добавление новой карточки
+  function handleAddPlace(name, link) {
+    api
+      .addCard(name, link)
+      .then((newCard) => {
+        setCards([newCard, ...cards])
+      })
+      .catch((error) => { console.log(error); })
+      .finally(() => closeAllPopups())
+  }
+
   function handleLikeCard(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.toggleLike(card._id, isLiked).then((newCard) => {
@@ -152,18 +163,11 @@ function App() {
         />
 
         {/*новая карточка*/}
-        <PopupWithForm name="add-card" title="Новое место"
-          btnText="Обновить"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}>
-          <input type="text" name="name" id="title-input" className="popup__info popup__info_type_title"
-            maxLength="30" minLength="2" placeholder="Название" required />
-          <span className="popup__info-error name-input-error" />
-          <input type="url" name="link" id="link-input" className="popup__info popup__info_type_link"
-            minLength="2"
-            placeholder="Ссылка на картинку" required />
-          <span className="popup__info-error intro-input-error" />
-        </PopupWithForm>
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlace}
+        />
 
         {/*просмотр карточки*/}
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />

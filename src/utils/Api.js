@@ -37,7 +37,7 @@ class Api {
   }
 
   // аватарка пользователя
-  editAvatar({avatar}) {
+  editAvatar({ avatar }) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -63,8 +63,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        link: link,
+        name, link
       })
     })
       .then((res) => this._checkResponse(res))
