@@ -25,13 +25,12 @@ class Api {
   }
 
   // профиль пользователя
-  editProfile(name, about) {
+  setUserInfo({name, about}) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about,
+        name, about
       })
     })
       .then((res) => this._checkResponse(res))
